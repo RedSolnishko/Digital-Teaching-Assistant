@@ -1,0 +1,93 @@
+@use "../utils/typography" as *;
+@use "../utils/breakpoints" as *;
+
+.link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  
+    &.link--default {
+      text-decoration: underline;
+      color: var(--ultramarine-default-color);
+      @include text-body;
+    }
+  
+    &.link--default-small {
+      text-decoration: underline;
+      color: var(--ultramarine-default-color);
+      @include text-body-small;
+    }
+  
+    &.link--icon {
+      color: var(--text-color);
+      gap: 0.8rem;
+      @include text-body;
+
+      svg{
+        width: 2.4rem;
+        height: 2.4rem;
+        color: var(--ultramarine-default-color);
+      }
+
+ 
+
+      @include from-mobile{
+        &:hover{
+          color: var(--ultramarine-default-color);
+          text-decoration: underline;
+        }
+      }
+
+      &:active{
+          color: var(--ultramarine-default-color);
+          text-decoration: underline;
+      }
+    }
+  
+    &.link--icon-small {
+      color: var(--text-color);
+      gap: 0.8rem;
+      @include text-body-small;
+
+      svg{
+        width: 2rem;
+        height: 2rem;
+        color: var(--ultramarine-default-color);
+      }
+
+      @include from-mobile{
+        &:hover{
+          color: var(--ultramarine-default-color);
+          text-decoration: underline;
+        }
+      }
+
+      &:active{
+        color: var(--ultramarine-default-color);
+        text-decoration: underline;
+      }
+    }
+  
+    &.link--social {
+      background: transparent;
+      color: var(--text-color);
+      gap: 1.2rem;
+      @include text-body-small;
+  
+      .link__icon {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+
+      @include from-mobile{
+        &:hover{
+          color: var(--ultramarine-default-color);
+        }
+      }
+
+      &:active{
+        color: var(--ultramarine-default-color);
+      }
+    }
+  }
+   

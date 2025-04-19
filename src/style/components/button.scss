@@ -1,0 +1,452 @@
+@use "../utils/typography" as *;
+@use "../utils/breakpoints" as *;
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    gap: 1.2rem;
+    padding: 1.2rem 1.6rem;
+    border-radius: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    @include text-button;
+    
+    svg{
+        width: 2rem;
+        height: 2rem;
+        fill: none;
+    }
+  
+    &__text {
+      flex-shrink: 0;
+    }
+  
+    &--icon-only {
+      padding: 1.2rem;
+  
+      .button__icon {
+        margin: 0;
+      }
+    }
+  
+    &__primary {
+      background-color: var(--ultramarine-default-color);
+      color: var(--text-contrast-color);
+      svg {
+        color: var(--text-contrast-color);
+      }
+  
+      @include from-mobile {
+        &:hover {
+          background-color: var(--ultramarine-dark-color);
+        }
+      }
+  
+      &:active {
+        background-color: var(--ultramarine-light-color1);
+      }
+  
+      &:disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        color: var(--text-blind-color);
+        background-color: var(--gray-color2);
+      }
+    }
+  
+    &__secondary {
+      background-color: transparent;
+      color: var(--ultramarine-default-color);
+      border: 1px solid var(--ultramarine-default-color);
+  
+      @include from-mobile {
+        &:hover {
+          background-color: var(--gray-color1);
+          border: 1px solid var(--ultramarine-light-color1);
+        }
+      }
+  
+      &:active {
+        background-color: var(--gray-color2);
+      }
+  
+      &:disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        color: var(--text-blind-color);
+        background-color: var(--gray-color2);
+      }
+    }
+  
+    &__contrast {
+      background-color: #fff;
+      color: var(--ultramarine-default-color);
+      border: 1px solid #eee;
+  
+      &:hover {
+        background-color: #f5f5f5;
+      }
+  
+      &:active {
+        background-color: #ebebeb;
+      }
+  
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    &__wb{
+        padding: 0;
+        gap: 0.8rem;
+        color: var(--ultramarine-default-color);
+        background-color: transparent;
+
+        svg{
+            width: 2rem;
+            height: 2rem;
+        }
+
+        @include mobile{
+            svg{
+                width: 1.6rem;
+                height: 1.6rem;
+            }
+        }
+
+        @include from-mobile{
+            &:hover{
+                color: var(--ultramarine-dark-color);
+            }
+        }
+
+        &:active {
+           color: var(--ultramarine-light-color1);
+        }
+  
+        &:disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+            color: var(--text-blind-color);
+        }
+    }
+
+    &__wb--small{
+        padding: 0;
+        gap: 0.8rem;
+        color: var(--ultramarine-default-color);
+        background-color: transparent;
+
+        @include text-button-small;
+        svg{
+            width: 2rem;
+            height: 2rem;
+        }
+
+        @include mobile{
+            svg{
+                width: 1.6rem;
+                height: 1.6rem;
+            }
+        }
+
+        @include from-mobile{
+            &:hover{
+                color: var(--ultramarine-dark-color);
+            }
+        }
+
+        &:active {
+           color: var(--ultramarine-light-color1);
+        }
+  
+        &:disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+            color: var(--text-blind-color);
+        }
+    }
+
+    &__default {
+      width: 4rem;
+      height: 4rem;
+      background-color: transparent;
+      color: var(--text-secondary-color);
+      padding: 0.8rem;
+  
+      svg {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+  
+      @include from-mobile {
+        &:hover {
+          background-color: var(--gray-color4);
+        }
+      }
+  
+      &:active {
+        background-color: var(--gray-color5);
+      }
+  
+      &:disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        background-color: transparent;
+        color: var(--text-blind-color);
+      }
+    }
+
+    &__defaultwb {
+        width: 4rem;
+        height: 4rem;
+        background-color: transparent;
+        color: var(--text-secondary-color);
+        padding: 0.8rem;
+        color: var(--text-contrast-color);
+        svg {
+          width: 2.4rem;
+          height: 2.4rem;
+        }
+    
+        @include from-mobile {
+          &:hover {
+            background-color: var(--text-contrast-blind-color);
+          }
+        }
+    
+        &:active {
+          background-color: var(--text-contrast-secondary-color);
+        }
+    
+        &:disabled {
+          cursor: not-allowed;
+          pointer-events: none;
+          background-color: transparent;
+          color: var(--text-blind-color);
+        }
+      }
+  
+    &__light {
+      width: 4.4rem;
+      height: 4.4rem;
+      border-radius: 1.2rem;
+      padding: 1rem;
+      color: var(--text-contrast-color);
+      background-color: var(--ultramarine-light-color1);
+        svg{
+            width: 2.4rem;
+            height: 2.4rem;
+        }
+      @include from-mobile {
+        &:hover {
+          background-color: var(--ultramarine-default-color);
+        }
+      }
+  
+      &:active {
+        background-color: var(--ultramarine-light-color1);
+        svg {
+          fill: var(--text-contrast-color);
+        }
+      }
+  
+      &:disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        background-color: transparent;
+        color: var(--text-blind-color);
+      }
+    }
+  
+    &__little {
+      width: 2.8rem;
+      height: 2.8rem;
+      padding: 4px;
+      border-radius: 0.8rem;
+      color: var(--text-secondary-color);
+      background-color: transparent;
+  
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+  
+      @include from-mobile {
+        &:hover {
+          color: var(--ultramarine-default-color);
+        }
+      }
+  
+      &:active {
+        color: var(--ultramarine-default-color);
+      }
+  
+      &:disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        background-color: transparent;
+        color: var(--text-blind-color);
+      }
+    }
+  
+    &__littlebg {
+      width: 2.8rem;
+      height: 2.8rem;
+      padding: 4px;
+      border-radius: 0.8rem;
+      color: var(--text-secondary-color);
+      background-color: var(--gray-color2);
+  
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+  
+      @include from-mobile {
+        &:hover {
+          color: var(--ultramarine-default-color);
+          background-color: var(--gray-color2);
+        }
+      }
+  
+      &:active {
+        background-color: var(--gray-color3);
+      }
+  
+      &:disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        background-color: var(--gray-color2);
+        color: var(--text-blind-color);
+      }
+    }
+
+    &__share{
+        display: flex;
+        align-items: center;
+        padding: 0;
+        gap: 1rem;
+        border: none;
+        @include text-button-small;
+    
+        @include mobile{
+            color: transparent;
+        }
+        
+        svg{
+            width: 3.6rem;
+            height: 3.6rem;
+            border-radius: 1.2rem;
+            background-color: #F1F4F9;
+            fill: #80889D;
+        }
+    
+        @include from-mobile{
+            &:hover{
+                svg{
+                    background-color: var(--ultramarine-default-color);
+                    fill: var(--text-contrast-color);
+                }
+            }
+        }
+    
+        &:active{
+            svg{
+                background-color: var(--ultramarine-default-color);
+                fill: var(--text-contrast-color);
+            }
+        }
+        
+        &:disabled{
+            color: transparent;
+            svg{
+                background-color: transparent;
+                fill: transparent;
+            }
+        }
+    }
+
+    &__user {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 4rem;
+        height: 4rem;
+        padding: 4px;
+        border-radius: 1.2rem;
+        border: 1px solid var(--border-color);
+
+        &-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.6rem;
+            height: 3.375rem;
+            background-color: var(--ultramarine-default-color);
+            border-radius: 0.8rem;
+        }
+
+        svg {
+            width: 2.4rem;
+            height: 2.4rem;
+            color: var(--text-contrast-color);
+        }
+
+        @include mobile {
+            width: 3.6rem;
+            height: 3.6rem;
+            border-radius: 1rem;
+
+            .button__user-container {
+                width: 2.8rem;
+                height: 2.8rem;
+            }
+
+            svg {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            &:active {
+                border-color: red; // Разобраться с активацией кнопки на мобилке
+            }
+        }
+
+        @include from-mobile {
+            &:hover {
+                border-color: var(--ultramarine-default-color);
+            }
+        }
+
+        &:active {
+            border-color: var(--border-color);
+        }
+
+        &:disabled {
+            border: transparent;
+            color: transparent;
+
+            .button__user-container {
+                background-color: transparent;
+            }
+
+            svg {
+                background-color: transparent;
+                color: transparent;
+            }
+        }
+    }
+
+    &__bookmark{
+      background-color: rgba(31, 39, 51, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-contrast-color);
+    }
+}
+  
+
+

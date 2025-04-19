@@ -1,0 +1,42 @@
+@use "../utils/breakpoints" as *;
+@use "../utils/typography" as *;
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 2.4rem 4rem;
+  font-family: var(--main-font);
+  @include text-body-small;
+
+  @include mobile {
+    gap: 0.8rem;
+  }
+  &__item {
+    color: var(--text-color);
+    cursor: pointer;
+    text-decoration: none; 
+
+   @include from-mobile{
+    &:hover:not(.disabled) {
+      color: var(--ultramarine-default-color);
+     
+    }
+   }
+   &:active{
+    color: var(--ultramarine-default-color);
+   }
+
+    &.disabled {
+      color: var( --text-secondary-color);
+      cursor: default; 
+    }
+  }
+
+  &__separator {
+    color: var( --text-secondary-color);
+    margin: 0 4px;
+    display: inline-flex;
+    align-items: center;
+  }
+}

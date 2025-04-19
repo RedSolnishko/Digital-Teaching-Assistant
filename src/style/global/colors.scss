@@ -1,0 +1,57 @@
+html {
+    //card-color
+    --card-color: #FFFFFF;
+
+    //background
+    --app-bg:#EEEFF2;
+  
+    //gray
+    --gray-color1:#F7F8FC;
+    --gray-color2:#F0F2F8;
+    --gray-color3:#ECEDF2;
+    --gray-color4:#E3E5EC;
+    --gray-color5:#D8DBE4;
+
+    //text
+    --text-color:#1F2733;
+    --text-secondary-color:#95A0B2;
+    --text-contrast-color:#FFFFFF;
+    --text-contrast-secondary-color: rgba(255, 255, 255, 0.6); 
+    --text-blind-color:#CED5E0;
+    --text-contrast-blind-color:rgba(255, 255, 255, 0.3); 
+
+    //divider
+    --divider-color:#EEEFF2;
+
+    //border
+    --border-color:#D3D6E0;
+
+    //suai-red
+    --suai-red-default-color:#FF004E;
+    --suai-red-light-color1:#FF4780;
+    --suai-red-light-color2:#FFEBF1;
+
+
+    //purpule
+    --purple-default-color:#6E27BE;
+    --purple-light-color:#F7EFFF;
+
+    //ultramarine
+    --ultramarine-default-color:#5747FF;
+    --ultramarine-dark-color:#4132DC;
+    --ultramarine-light-color1:#6E61FF;
+    --ultramarine-light-color2:#EDECFF;
+
+    //suai-blue
+    --suai-blue-default-color:#0087FF;
+    --suai-blue-light-color:#EDF7FF;
+
+    //cyan
+    --cyan-default-color:#0EBEF1;
+    --cyan-light-color:#E8FAFF;
+
+    //electric-green
+    --electric-green-default-color:#6DA800;
+    --electric-green-light-color1:#AFEF38;
+    --electric-green-light-color2:#E6F3CB;
+}

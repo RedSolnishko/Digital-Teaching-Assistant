@@ -1,0 +1,134 @@
+@use "./breakpoints" as *;
+
+
+@mixin text-h1 {
+  font-family: var(--main-font);
+  font-size: 4.8rem;
+  line-height: 5.6rem;
+  font-weight: 700;
+  @include mobile {
+    font-size: 2.8rem;
+    line-height: 3.6rem;
+    }
+}
+
+@mixin text-h2 {
+  font-family: var(--main-font);
+  font-size: 3.6rem;
+  line-height: 4.4rem;
+  font-weight: 700;
+  @include mobile {
+    font-size: 2.2rem;
+    line-height: 3rem;
+  }
+}
+
+@mixin text-h3 {
+  font-family: var(--main-font);
+  font-size: 2rem;
+  line-height: 2.8rem;
+  font-weight: 700;
+  @include mobile {
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+  }
+}
+
+@mixin text-h4 {
+  font-family: var(--main-font);
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-weight: 700;
+  @include mobile {
+    font-size: 1.4rem;
+    line-height: 2rem;
+  }
+}
+
+@mixin text-button {
+  font-family: var(--main-font);
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  font-weight: 500;
+  @include mobile{
+    font-size: 1.4rem;
+    line-height: 2rem;
+  }
+}
+
+@mixin text-button-small {
+  font-family: var(--main-font);
+  font-size: 1.4rem;
+  line-height: 2rem;
+  font-weight: 500;
+  @include mobile{
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
+}
+
+@mixin text-body {
+  font-family: var(--main-font);
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-weight: 400;
+  @include mobile{
+    font-size: 1.4rem;
+    line-height: 2rem;
+  }
+}
+
+@mixin text-body-bold {
+  font-family: var(--main-font);
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-weight: 500;
+  @include mobile{
+    font-size: 1.4rem;
+    line-height: 2rem;
+  }
+}
+
+@mixin text-body-small {
+  font-family: var(--main-font);
+  font-size: 1.4rem;
+  line-height: 2rem;
+  font-weight: 400;
+  @include mobile{
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
+}
+
+@mixin text-body-small-bold {
+  font-family: var(--main-font);
+  font-size: 1.4rem;
+  line-height: 2rem;
+  font-weight: 500;
+  @include mobile{
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
+}
+
+@mixin text-caption {
+  font-family: var(--main-font);
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  font-weight: 500;
+  @include mobile{
+    font-size: 1rem;
+    line-height: 1.2rem;
+  }
+}
+
+@mixin text-tag {
+  font-family: var(--main-font);
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  font-weight: 600;
+  @include mobile{
+    font-size: 1rem;
+    line-height: 1.4rem;
+  }
+}

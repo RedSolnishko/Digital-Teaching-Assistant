@@ -1,0 +1,54 @@
+@use "../utils/typography" as *;
+@use "../utils/breakpoints" as *;
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0.8rem;
+    border-radius: 0.8rem;
+    text-decoration: none; 
+    cursor: pointer;
+    @include text-tag;
+  
+    &--default {
+      color: var(--text-secondary-color);
+      background-color: var(--gray-color3);
+
+      @include from-mobile{
+        &:hover{
+            background-color: var(--gray-color4);
+        }
+      }
+
+      &:active{
+        background-color: var(--gray-color3);
+      }
+    }
+  
+    &--cyan {
+      color: var(--cyan-default-color);
+      background-color: var(--cyan-light-color); 
+    }
+  
+    &--purple {
+      color: var(--purple-default-color);
+      background-color: var( --purple-light-color); 
+    }
+  
+    &--green {
+      color: var(--electric-green-default-color);
+      background-color: var(--electric-green-light-color2); 
+    }
+  
+    &--red {
+      color: var(--suai-red-light-color1);
+      background-color: var(--suai-red-light-color2); 
+    }
+  
+    &--blue {
+      color: var( --suai-blue-default-color);
+      background-color: var(--suai-blue-light-color); 
+    }
+}
+  

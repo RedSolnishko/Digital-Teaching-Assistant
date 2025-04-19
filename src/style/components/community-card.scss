@@ -1,0 +1,107 @@
+@use "../utils/breakpoints" as *;
+@use "../utils/typography" as *;
+
+.community-card {
+  display: flex;
+  flex-direction: column;
+  width: 36rem;
+  border-radius: 3.2rem;
+  overflow: hidden;
+  background-color: var(--card-color);
+  padding: 0.8rem;
+  gap: 2rem;
+  
+    @include mobile{
+        width: 35.1rem;
+        border-radius: 2.4rem;
+        gap: 1.6rem;
+    }
+
+  &__image-wrapper {
+    position: relative;
+    height: 20rem;
+    border-radius: 2.4rem;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    @include mobile{
+        gap: 1.6rem;
+    }
+  }
+
+  &__bookmark-button {
+    position: absolute;
+    top: 1.6rem;
+    right: 1.6rem;
+  }
+  
+  &__tags{
+    display: flex;
+    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+    
+  &__tag-wrapper {
+    display: flex;
+    width: max-content; // Контейнер займёт только необходимую ширину
+  }
+
+  &__title {
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.2s ease-in-out;
+    margin-bottom: 1.2rem;
+    @include from-mobile{
+        &:hover {
+          color: var(--ultramarine-default-color);
+        }
+    }
+
+    @include mobile{
+      margin-bottom: 0.4rem;
+    }
+  }
+
+  &__responsible {
+    display: flex;
+    gap: 1.6rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+
+    @include mobile{
+      gap: 1.2rem;
+      padding-top: 1.6rem;
+    }
+  }
+
+  &__avatar {
+    @include mobile{
+      width: 3.2rem;
+      height: 3.2rem;
+      border-radius: 1.2rem;
+    }
+  }
+
+  &__name {
+    color: var(--text-primary-color);
+    margin-bottom: 0.8rem;
+    @include text-body-small;
+  }
+
+  &__role {
+    color: var(--text-secondary-color);
+    white-space: pre-line;
+    @include text-caption;
+  }
+}

@@ -1,0 +1,58 @@
+@use "../utils/breakpoints" as *;
+
+.switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+  border: none;
+  border-radius: 1.2rem;
+  cursor: pointer;
+  background: var(--card-color);
+
+  &__icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 1.2rem;
+
+    @include mobile{
+        width: 3.2rem;
+        height: 3.2rem;
+        border-radius: 1rem;
+
+    }
+
+    &.active {
+      background-color: var(--ultramarine-default-color); 
+      color: var(--card-color);
+    }
+
+    &:not(.active) {
+      color: var(--text-secondary-color); 
+    }
+  }
+
+  &__icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    fill: none;
+
+    @include mobile{
+        width: 2rem;
+        height: 2rem;
+    }
+  }
+
+  @include from-mobile {
+    &:hover .switcher__icon-wrapper:not(.active) {
+      color: var(--ultramarine-default-color);
+    }
+  }
+
+  &:active .switcher__icon {
+    transform: scale(0.95);
+  }
+}

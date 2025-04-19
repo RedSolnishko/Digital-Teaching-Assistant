@@ -1,0 +1,116 @@
+@use "../utils/breakpoints" as *;
+
+.checkbox,
+.radio {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+// ** Стили для чекбоксов **
+.checkbox__input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+
+    & + .checkbox__box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.6rem;
+
+        @include mobile {
+            width: 1.6rem;
+            height: 1.6rem;
+        }
+    }
+
+    &:checked + .checkbox__box {
+        background-color: var(--ultramarine-default-color);
+        border-color: var(--ultramarine-default-color);
+
+        // отображение галочки через маску
+        &::after {
+            content: "";
+            display: block;
+            width: 2rem;
+            height: 2rem;
+            mask: url(../../assets/svg/check.svg) no-repeat center;
+            background-color: white;
+        }
+    }
+
+    &:disabled + .checkbox__box {
+        background: var(--gray-color3);
+        border-color: var(--border-color);
+        pointer-events: none;
+        &::after {
+            content: url(../../assets/svg/check-disabled.svg);
+            color: var(--border-color);
+        }
+    }
+}
+
+// ** Стили для радио-кнопок **
+.radio__input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+
+    & + .radio__circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border: 1px solid var(--border-color);
+        border-radius: 10rem;
+        
+        @include mobile{
+            width: 1.6rem;
+            height: 1.6rem;
+        }
+
+        &:hover + .radio__circle {
+            border-color: var(--ultramarine-dark-color);
+        }
+    }
+
+    &:checked + .radio__circle {
+        border-color: var(--ultramarine-default-color);
+        position: relative;
+
+        @include from-mobile{
+            &:hover {
+                border-color: var(--ultramarine-dark-color);
+                &::after{
+                    background-color: var(--ultramarine-dark-color);
+                }
+            }
+        }
+
+        &::after {
+            content: "";
+            width: 1rem;
+            height: 1rem;
+            background: var(--ultramarine-default-color);
+            border-radius: 50%; 
+        }
+    }
+
+    &:disabled + .radio__circle {
+        border-color: var(--border-color);
+        background: var(--gray-color3);
+        pointer-events: none;
+        
+        &::after{
+            background: var(--border-color);
+        }
+    }
+}

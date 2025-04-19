@@ -1,0 +1,102 @@
+@use "../utils/breakpoints" as *;
+@use "../utils/typography" as *;
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 18rem;
+  border-radius: 3.2rem;
+  padding: 0.8rem;
+  background: var(--card-color);
+  font-family: var(--main-font);
+  gap: 2rem;
+
+  @include mobile{
+    width: 16.8rem;
+    border-radius: 2.4rem;
+  }
+
+  &__image-wrapper {
+    width: 16.4rem;
+    height: 16.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--gray-color4);
+    border-radius: 2.4rem;
+    overflow: hidden; 
+
+    @include mobile{
+      width: 15.2rem;
+      height: 15.2rem;
+      border-radius: 2rem;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__price {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    color: var(--text-secondary-color);
+    @include text-caption;
+  }
+
+  &__icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    
+    @include mobile{
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+
+  &__title {
+    color: var(--text-color);
+    margin-top: 0.8rem;
+    margin-bottom: 2rem;
+
+    @include mobile{
+      margin-bottom: 1.6rem;
+    }
+  }
+
+  &__button-wrapper {
+    display: flex;
+    justify-content: center; // Центрируем кнопку
+    width: 100%;
+  }
+
+  &__button {
+    background: var(--ultramarine-default-color);
+    color: var(--text-contrast-color);
+    border: none;
+    width: 14.8rem;
+    padding: 1.2rem 1.6rem;
+    border-radius: 1.2rem;
+    gap: 1.2rem;
+    cursor: pointer;
+    @include text-button;
+
+    @include mobile{
+      width: 14.4rem;
+      padding: 1rem 1.2rem;
+      border-radius: 1rem;
+      gap: 0.8rem;
+    }
+  }
+}

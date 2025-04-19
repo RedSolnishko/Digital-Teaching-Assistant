@@ -1,0 +1,60 @@
+@use "../utils/typography" as *;
+@use "../utils/breakpoints" as *;
+
+.tab {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+    gap: 1.2rem;
+    padding-bottom: 1.6rem;
+    padding-inline-end: 0;
+    padding-inline-start: 0;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary-color);
+    @include text-button;
+
+    @include mobile{
+        gap: 0.8rem;
+        padding-bottom: 1.2rem;
+
+        .tab__badge{
+            width: 2.8rem;
+            height: 2.4rem;
+            border-radius: 0.8rem;
+        }
+    }
+
+    &__badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.6rem;
+        height: 3.6rem;
+        background: var(--gray-color5);
+        color: var(--text-secondary-color);
+        border-radius: 1.2rem;
+        @include text-caption;
+    }
+
+    &:active {
+        color: var(--text-color);
+
+        .tab__badge {
+            background: var(--ultramarine-default-color);
+            color: var(--text-contrast-color);
+        }
+
+        //  псевдоэлемент для линии
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 8px;
+            height: 1px; 
+            background: var(--ultramarine-default-color); 
+        }
+    }
+}
