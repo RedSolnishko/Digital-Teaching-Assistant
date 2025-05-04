@@ -1,0 +1,80 @@
+@use "../utils/typography" as *;
+@use "../utils/breakpoints" as *;
+
+
+.menu {
+    width: 24rem;
+    height: 90rem;
+    background-color: var(--card-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  
+    &__header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2.4rem;
+        border-top: 1px solid var(--divider-color);
+        border-bottom: 1px solid var(--divider-color);
+    }
+  
+    &__logo {
+        width: 8rem;
+        padding: 2.4rem 13.4rem 2.4rem 2.4rem;
+    }
+ 
+    &__info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1.6rem;
+    }
+  
+    &__name {
+        text-align: center;
+        padding-top: 2rem;
+        color: var(--text-color);
+        @include text-body-bold;
+    }
+  
+    &__role {
+        color: var(--text-secondary-color);
+        @include text-body-small;
+    }
+  
+    &__stats {
+        display: flex;
+        justify-content: center;
+        color: var(--text-secondary-color);
+        gap: 0.8rem;
+        @include text-body-small;
+    }
+  
+    &__stat {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+  
+    &__icon {
+        width: 1.6rem;
+        height: 1.6rem;
+    }
+  
+    &__nav {
+        margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+  
+    &__footer {
+        width: 19.2rem;
+        padding-top: 4rem;
+    }
+  }
+  

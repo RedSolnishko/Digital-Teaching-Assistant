@@ -1,16 +1,7 @@
 import React from "react";
 import DefaultLogo from "../../assets/svg/default-logo.svg?react"; // SVG-заглушка
 
-/**
- * Компонент карточки партнера
- * @param {string} logo - Логотип партнера (если нет, используется заглушка)
- * @param {string} name - Название партнера
- * @param {string} link - Ссылка на сайт партнера
- * @param {string} contact - Контактное лицо партнера
- * @param {string} phone - Телефон партнера
- * @param {string} email - Электронная почта партнера
- * @param {Object} socials - Объект с социальными ссылками и SVG-иконками
- */
+
 const PartnerCard = ({ logo, name, link, contact, phone, email, socials }) => {
   return (
     <div className="partner-card">

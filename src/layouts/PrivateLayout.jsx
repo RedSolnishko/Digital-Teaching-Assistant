@@ -1,7 +1,13 @@
 import React from 'react';
-import { Outlet, Link  } from 'react-router-dom';
+import { Outlet, Link, Navigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 const PrivateLayout = () => {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className="private-layout">
@@ -26,7 +32,7 @@ const PrivateLayout = () => {
         </main>
       </div>
       <footer>
-        <p>&copy; 2025 Мой React Проект</p>
+        <p>© 2025 Мой React Проект</p>
       </footer>
     </div>
   );

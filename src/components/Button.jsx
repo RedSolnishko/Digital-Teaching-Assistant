@@ -5,7 +5,7 @@ import React from "react";
  * @param {ReactNode} leftIcon - Иконка/изображение слева (ReactNode или путь к изображению)
  * @param {ReactNode} rightIcon - Иконка/изображение справа (ReactNode или путь к изображению)
  * @param {ReactNode} userIcon - Пользовательская иконка внутри специального контейнера
- * @param {string} variant - 'primary' | 'secondary' | 'wb' | 'wb-small'| 'share | 'contrast' | 'text' | 'text--small' | 'default' | 'light' | 'little' | 'littlebg' | 'user'
+ * @param {string} variant - 'primary' | 'secondary' | 'wb' | 'wb-small'| 'share | 'contrast' | 'text' | 'text--small' | 'default' | 'light' | 'little' | 'littlebg' | 'user' | 'menu'
  * @param {React.ReactNode} children - Текст кнопки
  * @param {object} props - Остальные пропсы (onClick, disabled и т.д.)
  */

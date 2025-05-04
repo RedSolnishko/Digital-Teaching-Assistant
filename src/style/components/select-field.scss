@@ -1,0 +1,225 @@
+@use "../utils/breakpoints" as *;
+@use "../utils/typography" as *;
+
+.select-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 36rem;
+  
+  @include mobile{
+    width: 32.7rem;
+  }
+
+  &__control {
+    height: 6.8rem;
+    position: relative;
+    border: 1px solid var(--gray-color1);
+    border-radius: 1.2rem;
+    background: var(--gray-color1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    @include mobile{
+      height: 5.6rem;
+    } 
+
+    &:hover {
+      border-color: var(--ultramarine-light-color1);
+    }
+
+    &:active:not(&--disabled),
+    &--active {
+      .select-field__value {
+        color: var(--text-color);
+      }
+    }
+
+    &--disabled {
+      pointer-events: none;
+      background-color: var(--gray-color1);
+      
+      .select-field__label,
+      .select-field__icon svg,
+      .select-field__value {
+        color: var(--text-blind-color);
+      }
+    }
+
+    &--has-left-icon {
+      padding-left: 5.4rem;
+      @include mobile{
+        padding-left: 2.7rem;
+      }
+    }
+
+    &--has-right-icon {
+      padding-right: 5.4rem;
+      @include mobile{
+        padding-right: 2.7rem;
+      }
+    }
+  }
+
+  &__value {
+    width: 75%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary-color);
+    transition: color 0.2s ease;
+    padding-left: 1.2rem;
+    @include text-body-bold; 
+
+    .select-field--open & {
+      color: var(--text-color);
+    }
+  }
+
+  &__icon {
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: transform 0.3s ease;
+
+    @include mobile{
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+
+    svg {
+      fill: none;
+      color: var(--text-secondary-color);
+    }
+
+    &--left {
+      left: 1.6rem;
+
+      @include mobile{
+        left: 1.2rem;
+      }
+    }
+
+    &--right {
+      right: 1.6rem;
+
+      @include mobile{
+        right: 1.2rem;
+      }
+      
+      .select-field--open & {
+        transform: translateY(-50%) rotate(180deg);
+      }
+    }
+  }
+
+  &__helper {
+    color: var(--text-secondary-color);
+    @include text-caption;
+  }
+
+  &__error {
+    color: var(--suai-red-default-color);
+    @include text-caption;
+  }
+  &__menu {
+    position: absolute;
+    width: 95%;
+    top: 85%;
+    padding: 0.8rem;
+    z-index: 100;
+    border-radius: 1.2rem;
+    background: var(--card-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    @include text-body-small;
+  }
+
+  &__item {
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    transition: background-color 0.2s ease;
+
+    @include mobile{
+      padding: 0.6rem 0.8rem;
+      gap: 0.8rem;
+    }
+
+    @include from-mobile{
+      &:hover {
+        background-color: var(--gray-color1);
+      }
+    }
+
+    .checkbox {
+      &__box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.6rem;
+        transition: all 0.2s ease;
+
+        @include mobile{
+          width:  1.6rem;
+          height: 1.6rem;
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          width: 2rem;
+          height: 2rem;
+          mask: url(../../assets/svg/check.svg) no-repeat center;
+          background-color: transparent;
+          transition: opacity 0.2s ease;
+
+        }
+      }
+
+      &__input:checked + &__box {
+        background-color: var(--ultramarine-default-color);
+        border-color: var(--ultramarine-default-color);
+
+        &::after {
+          background-color: white;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  // Состояния
+  &--has-value &__label,
+  &--open &__label {
+    top: 0.1rem;
+    transform: translateY(0);
+    @include text-caption;
+  }
+
+  &--error {
+    .select-field__control {
+      border-color: var(--suai-red-default-color);
+    }
+
+    .select-field__label,
+    .select-field__value {
+      color: var(--suai-red-default-color);
+    }
+
+    .select-field__icon svg {
+      color: var(--suai-red-default-color);
+    }
+  }
+}

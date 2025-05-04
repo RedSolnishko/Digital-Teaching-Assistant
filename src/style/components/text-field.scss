@@ -1,0 +1,159 @@
+@use "../utils/breakpoints" as *;
+@use "../utils/typography" as *;
+
+.text-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 36rem;
+  @include text-body-bold;
+
+  @include mobile{
+    width: 32.7rem;
+  }
+
+  &__wrapper {
+    height: 6.8rem;
+    position: relative;
+    border: 1px solid var(--gray-color1);
+    border-radius: 1.2rem;
+    background: var(--gray-color1);
+    color: var(--text-color);
+
+    @include mobile{
+      height: 5.6rem;
+    }
+
+    &--has-left-icon {
+      padding-left: 3.4rem;
+
+      @include mobile{
+        padding-left: 2.6rem;
+      }
+    }
+
+    &:hover {
+      border-color: var(--ultramarine-light-color1);
+    }
+
+    &:focus-within {
+      border-color: var(--ultramarine-light-color1);
+    }
+  }
+
+  &__wrapper--has-value &__label,
+  &__wrapper:focus-within &__label {
+    top: 0.5rem;
+    transform: translateY(0);
+    @include text-caption;
+  }
+
+  &__label {
+    position: absolute;
+    left: 5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary-color);
+    transition: all 0.2s ease;
+    pointer-events: none;
+
+    @include mobile{
+      left: 3.8rem;
+    }
+  }
+
+  &__input {
+    width: 75%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 2.2rem 1.6rem;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+
+    @include mobile{
+      padding: 1.8rem 1.2rem;
+    }
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+  }
+
+  &__icon {
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+
+    @include mobile{
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+
+    svg {
+      fill: none;
+      color: var(--text-secondary-color);
+    }
+
+    &--left {
+      left: 1.6rem;
+      
+      @include mobile{
+        left: 1.2rem;
+      }
+    }
+
+    &--right {
+      right: 1.6rem;
+
+      @include mobile{
+        right: 1.2rem;
+      }
+    }
+  }
+
+  &__helper {
+    color: var(--text-secondary-color);
+    @include text-caption;
+  }
+
+  &__error {
+    color: var(--suai-red-default-color);
+    @include text-caption;
+  }
+
+  &--error &__wrapper {
+    border-color: var(--suai-red-default-color);
+  }
+
+  &--error &__label {
+    color: var(--suai-red-default-color);
+  }
+
+  &--error &__input {
+    color: var(--suai-red-default-color);
+  }
+
+  &--error &__icon svg {
+    color: var(--suai-red-default-color);
+  }
+}
+
+.text-field--disabled {
+  .text-field__label,
+  .text-field__icon svg,
+  .text-field__helper,
+  .text-field__error,
+  .text-field__input {
+    color: var(--text-blind-color) ;
+  }
+  .text-field__wrapper {
+    border-color: var(--text-blind-color) ;
+  }
+}

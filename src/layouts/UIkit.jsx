@@ -12,7 +12,8 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import Dropdown from '../components/DropDown';
 import Switcher from '../components/Switcher';
 import ImagePlaceholder from '../components/ImagePlaceholder';
-
+import TextField from '../components/TextField';
+import SelectField from '../components/SelectField';
 
 import VkIcon from '../assets/svg/vk.svg?react';
 import Telergram from '../assets/svg/telegram.svg?react';
@@ -20,8 +21,11 @@ import LinkIcon  from  '../assets/svg/socials.svg?react';
 import EditIcon from "../assets/svg/edit.svg?react";
 import PlusIcon from "../assets/svg/plus.svg?react";
 import Share  from '../assets/svg/share.svg?react';
-import User from '../assets/svg/user.svg?react'
-
+import User from '../assets/svg/user.svg?react';
+import Calendar from '../assets/svg/calendar.svg?react';
+import Eye from '../assets/svg/eye.svg?react';
+import ChevronDown from '../assets/svg/chevron-down.svg?react';
+import Group from '../assets/svg/group.svg?react';
 
 import EventCard from '../components/card/EventCard';
 import CommunityCard from '../components/card/CommunityCard';
@@ -30,35 +34,16 @@ import ProductCard from '../components/card/ProductCard';
 import PartnerCard from '../components/card/PartnerCard';
 import LevelCard from '../components/card/levelCard';
 
-const text = [
-  { id: 1, label: "Вариант 1" },
-  { id: 2, label: "Вариант 2" },
-  { id: 3, label: "Вариант 3" },
-];
-
-const check = [
-  { id: 1, label: "Вариант 1", checked: false},
-  { id: 2, label: "Вариант 2", checked: false},
-  { id: 3, label: "Вариант 3", checked: false},
-];
-
-const icon = [
-  { id: 1, label: "VK", icon: <VkIcon />},
-  { id: 2, label: "Telergram", icon: <Telergram />},
-  { id: 3, label: "Скопировать ссылку", icon: <LinkIcon /> },
-];
-
-const selectOptions = [
-  { id: 1, label: "React" },
-  { id: 2, label: "Vue" },
-  { id: 3, label: "Angular" },
-];
+import Menu from '../components/Menu';
 
 const UIkit = () => {
-  const [phone, setPhone] = useState("");
-  const [birthDate, setBirthDate] = useState(null);
-  const [role, setRole] = useState("");
-  const [interests, setInterests] = useState([]);
+  const [textName, setTextName] = useState("");
+  const [textEmail, setTextEmail] = useState("");
+  const [textPhone, setTextPhone] = useState("");
+  
+  const [selectSingle, setSelectSingle] = useState(null);
+  const [selectMulti, setSelectMulti] = useState([]);
+  const [selectError, setSelectError] = useState(null);
 
   return (
     <div className="public-layout">
@@ -73,9 +58,9 @@ const UIkit = () => {
             <h2 className='text-h2'> Button</h2>
             <li>
             <Button variant="primary"
-            leftIcon={<EditIcon />} 
-
-            ></Button>
+            leftIcon={<EditIcon />}>
+                Button
+            </Button>
             </li>
 
             <li>
@@ -115,9 +100,6 @@ const UIkit = () => {
 
             <Button variant="user" userIcon={<User />} onClick={() => console.log("User clicked!")} />
 
-          
-
-
             <li>
             <Button 
               variant="default" 
@@ -151,6 +133,14 @@ const UIkit = () => {
               variant="defaultwb" 
               leftIcon={<EditIcon />} >
             </Button>
+            </li>
+
+            <li>
+              <Button
+                variant = "menu"
+                leftIcon = {<Group />}>
+                  Сообщества
+              </Button>
             </li>
           </ul>
         
@@ -236,9 +226,28 @@ const UIkit = () => {
 
           <ul className='Dropdown'>
             <h2 className='text-h2'>Dropdown</h2>
-            <li> <Dropdown type="text" options={text} /> </li>
-            <li> <Dropdown type="checkbox" options={check} /> </li>
-            <li> <Dropdown type="icon" options={icon} /></li>
+            <li> <Dropdown type="text" options={[
+              { id: 1, label: "Вариант 1" },
+              { id: 2, label: "Вариант 2" },
+              { id: 3, label: "Вариант 3" },
+            ]} />
+            
+            </li>
+
+            <li> <Dropdown type="checkbox" options={[
+              { id: 1, label: "Вариант 1", checked: false},
+              { id: 2, label: "Вариант 2", checked: false},
+              { id: 3, label: "Вариант 3", checked: false},
+            ]} />
+            </li>
+
+            <li> <Dropdown type="icon"       
+            options={[
+              { id: 1, label: "VK", icon: <VkIcon />},
+              { id: 2, label: "Telergram", icon: <Telergram />},
+              { id: 3, label: "Скопировать ссылку", icon: <LinkIcon /> },
+            ]} />
+            </li>
           </ul>
 
           <ul className='Breadcrumbs'>
@@ -265,6 +274,98 @@ const UIkit = () => {
             </li>
           </ul>
 
+          <ul className="Inputs">
+  <h2 className="text-h2">TextField</h2>
+
+  <li>
+    <TextField
+      label="Введите имя"
+
+      value={textName}
+      onChange={setTextName}
+      helperText="Ваше имя"
+      leftIcon={<Calendar />}
+      rightIcon={<Eye />}
+    />
+  </li>
+
+  <li>
+    <TextField
+      label="example@email.com"
+      value={textEmail}
+      onChange={setTextEmail}
+      helperText="Введите email"
+      leftIcon={<Calendar />}
+      rightIcon={<Eye />}
+      disabled
+      error
+    />
+  </li>
+
+  <li>
+    <TextField
+      placeholder="+7 (000) 000-00-00"
+      value={textPhone}
+      onChange={setTextPhone}
+      helperText="Маска номера телефона"
+      leftIcon={<EditIcon />}
+      rightIcon={<PlusIcon />}
+    />
+  </li>
+</ul>
+
+<ul className="Selects">
+  <h2 className="text-h2">SelectField</h2>
+
+  <li>
+    <SelectField
+      placeholder="Единичный выбор"
+      value={selectSingle}
+      onChange={setSelectSingle}
+      options={[
+        { id: 1, label: "Вариант A" },
+        { id: 2, label: "Вариант B" },
+        { id: 3, label: "Вариант C" }
+      ]}
+      // leftIcon={<Calendar />}
+      rightIcon={<ChevronDown />}
+      helperText="Выберите один"
+    />
+  </li>
+
+  <li>
+    <SelectField
+      placeholder="Множественный выбор"
+      value={selectMulti}
+      onChange={setSelectMulti}
+      isMulti
+      options={[
+        { id: 1, label: "React" },
+        { id: 2, label: "Vue" },
+        { id: 3, label: "Svelte" }
+      ]}
+      leftIcon={<Calendar />}
+      rightIcon={<ChevronDown />}
+      helperText="Вы можете выбрать несколько"
+    />
+  </li>
+
+  <li>
+    <SelectField
+      placeholder="С ошибкой"
+      value={selectError}
+      onChange={setSelectError}
+      options={[
+        { id: 1, label: "Ошибочный вариант" },
+        { id: 2, label: "Неудачный выбор" }
+      ]}
+      leftIcon={<Calendar />}
+      rightIcon={<ChevronDown />}
+      error
+      helperText="Произошла ошибка"
+    />
+  </li>
+</ul>
 
 
 
@@ -375,6 +476,13 @@ const UIkit = () => {
             <li>
             <LevelCard name="asdasdasddadsdasdasdsadsddsdsdsd" icon="src\assets\pics\image.svg" completed={true} cost={100} />
             </li>
+          </ul>
+
+          <ul className='Menu'>
+              <h2 className='text-h2'></h2>
+              <li>
+                <Menu/>
+              </li>
           </ul>
       </main>
     </div>

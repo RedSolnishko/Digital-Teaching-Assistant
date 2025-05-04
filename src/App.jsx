@@ -3,8 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import PublicLayout from './layouts/PublicLayout';
 import PrivateLayout from './layouts/PrivateLayout';
 import NotFound from './layouts/NotFound';
-import UIkit from './layouts/UIkit'; 
+import UIkit from './layouts/UIkit';
 import TextContentPage from './layouts/TextContentPage';
+import RequireAuth from './components/RequireAuth';
 
 // Демонстрационные компоненты страниц
 const HomePage = () => <div>Главная страница</div>;
@@ -12,7 +13,6 @@ const LoginPage = () => <div>Страница входа</div>;
 const DashboardPage = () => <div>Панель управления</div>;
 const ProfilePage = () => <div>Профиль пользователя</div>;
 const SettingsPage = () => <div>Настройки пользователя</div>;
-
 
 const App = () => {
   return (
@@ -22,11 +22,11 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/uikit" element={<UIkit />} />
-        <Route path='/text-content' element={<TextContentPage/>}/>
+        <Route path="/text-content" element={<TextContentPage />} />
       </Route>
 
       {/* Приватные маршруты */}
-      <Route element={<PrivateLayout />}>
+      <Route element={<RequireAuth><PrivateLayout /></RequireAuth>}>
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/dashboard/profile" element={<ProfilePage />} />
         <Route path="/dashboard/settings" element={<SettingsPage />} />
