@@ -5,6 +5,7 @@ import PaginationMenu from '../components/Pagination';
 import Tab from '../components/Tab';
 import Exit from '../assets/svg/door-exit.svg?react';
 import Edit from '../assets/svg/edit.svg?react';
+import { getUsers, getTeachers } from '../utils/api';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -12,30 +13,35 @@ const UserList = () => {
   const [currentPageUsers, setCurrentPageUsers] = useState(1);
   const [currentPageTeachers, setCurrentPageTeachers] = useState(1);
   const [activeTab, setActiveTab] = useState('users');
-  const usersPerPage = 5;
+  const itemsPerPage = 5;
   const navigate = useNavigate();
 
   useEffect(() => {
     const role = localStorage.getItem('role');
     if (role !== 'admin') {
-      navigate('/');
+      navigate('/login');
       return;
     }
 
-    fetch('/api/users')
-      .then((res) => res.json())
-      .then((data) => setUsers(data));
-    fetch('/api/teachers')
-      .then((res) => res.json())
-      .then((data) => setTeachers(data));
+    const fetchData = async () => {
+      try {
+        const usersData = await getUsers();
+        setUsers(usersData);
+        const teachersData = await getTeachers();
+        setTeachers(teachersData);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+    fetchData();
   }, [navigate]);
 
-  const indexOfLastUser = currentPageUsers * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const indexOfLastUser = currentPageUsers * itemsPerPage;
+  const indexOfFirstUser = indexOfLastUser - itemsPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-  const indexOfLastTeacher = currentPageTeachers * usersPerPage;
-  const indexOfFirstTeacher = indexOfLastTeacher - usersPerPage;
+  const indexOfLastTeacher = currentPageTeachers * itemsPerPage;
+  const indexOfFirstTeacher = indexOfLastTeacher - itemsPerPage;
   const currentTeachers = teachers.slice(indexOfFirstTeacher, indexOfLastTeacher);
 
   const handlePageChangeUsers = (pageNumber) => {
@@ -48,7 +54,7 @@ const UserList = () => {
 
   return (
     <div className="user-list">
-      <h2 className="user-list__title text-h2">User List</h2>
+      <h2 className="user-list__title text-h2">Список пользователей</h2>
       <div className="user-list__tabs">
         <Tab
           label="Пользователи"
@@ -61,17 +67,15 @@ const UserList = () => {
           onClick={() => setActiveTab('teachers')}
         />
       </div>
-
       <div className="user-list__prbtn">
         <Button
           variant="primary"
           rightIcon={<Edit />}
           onClick={() => navigate(`/users/${localStorage.getItem('user_id')}`)}
         >
-          My Profile
+          Мой профиль
         </Button>
       </div>
-
       {activeTab === 'users' && (
         <>
           <Button
@@ -79,7 +83,7 @@ const UserList = () => {
             rightIcon={<Edit />}
             onClick={() => navigate('/users/new')}
           >
-            New User
+            Создать пользователя
           </Button>
           <div className="text-content user-list__table">
             <figure className="table">
@@ -88,9 +92,9 @@ const UserList = () => {
                   <tr>
                     <th>ID</th>
                     <th>Email</th>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Action</th>
+                    <th>Имя</th>
+                    <th>Роль</th>
+                    <th>Действия</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -99,13 +103,13 @@ const UserList = () => {
                       <td>{user.id}</td>
                       <td>{user.email}</td>
                       <td>{user.name}</td>
-                      <td>{user.role}</td>
+                      <td>{user.role === 'admin' ? 'Администратор' : 'Пользователь'}</td>
                       <td>
                         <Button
                           variant="little"
                           onClick={() => navigate(`/users/${user.id}`)}
                         >
-                          Edit
+                          Редактировать
                         </Button>
                       </td>
                     </tr>
@@ -116,7 +120,7 @@ const UserList = () => {
           </div>
           <PaginationMenu
             totalItems={users.length}
-            itemsPerPage={usersPerPage}
+            itemsPerPage={itemsPerPage}
             currentPage={currentPageUsers}
             onPageChange={handlePageChangeUsers}
           />
@@ -129,7 +133,7 @@ const UserList = () => {
             rightIcon={<Edit />}
             onClick={() => navigate('/teachers/new')}
           >
-            New Teacher
+            Создать преподавателя
           </Button>
           <div className="text-content user-list__table">
             <figure className="table">
@@ -137,9 +141,9 @@ const UserList = () => {
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>Department</th>
-                    <th>Action</th>
+                    <th>Имя</th>
+                    <th>Кафедра</th>
+                    <th>Действия</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -153,7 +157,7 @@ const UserList = () => {
                           variant="little"
                           onClick={() => navigate(`/teachers/${teacher.id}`)}
                         >
-                          Edit
+                          Редактировать
                         </Button>
                       </td>
                     </tr>
@@ -164,14 +168,14 @@ const UserList = () => {
           </div>
           <PaginationMenu
             totalItems={teachers.length}
-            itemsPerPage={usersPerPage}
+            itemsPerPage={itemsPerPage}
             currentPage={currentPageTeachers}
             onPageChange={handlePageChangeTeachers}
           />
         </>
       )}
-      <Button variant="primary" onClick={() => navigate('/')} leftIcon={<Exit />}>
-        Logout
+      <Button variant="primary" onClick={() => navigate('/login')} leftIcon={<Exit />}>
+        Выйти
       </Button>
     </div>
   );

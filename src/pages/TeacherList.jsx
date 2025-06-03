@@ -3,17 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import PaginationMenu from '../components/Pagination';
 import Button from '../components/Button';
 import ImagePlaceholder from '../components/ImagePlaceholder';
+import { getTeachers } from '../utils/api';
 
 const TeacherList = () => {
   const [teachers, setTeachers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const teachersPerPage = 8;
+  const teachersPerPage = 6;
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/api/teachers')
-      .then((res) => res.json())
-      .then((data) => setTeachers(data));
+    const fetchData = async () => {
+      try {
+        const data = await getTeachers();
+        setTeachers(data);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+    fetchData();
   }, []);
 
   const indexOfLastTeacher = currentPage * teachersPerPage;
@@ -26,7 +33,7 @@ const TeacherList = () => {
 
   return (
     <div className="teacher-list">
-      <h2 className="teacher-list__title text-h2">Teachers</h2>
+      <h2 className="teacher-list__title text-h2">Преподаватели</h2>
       <div className="teacher-list__cards">
         {currentTeachers.map((teacher) => (
           <div
@@ -41,7 +48,7 @@ const TeacherList = () => {
             />
             <h3 className="teacher-list__name">{`${teacher.lastName} ${teacher.firstName} ${teacher.middleName}`}</h3>
             <p className="teacher-list__department">{teacher.department}</p>
-            <p className="teacher-list__topics">Заданий: {teacher.topics.length}</p>
+            <p className="teacher-list__topics">Заданий: {teacher.topics?.length || 0}</p>
           </div>
         ))}
       </div>
@@ -55,12 +62,11 @@ const TeacherList = () => {
         <Button
           variant="secondary"
           onClick={() => navigate('/profile')}
-            >
+        >
           Назад
         </Button>
       </div>
     </div>
-      
   );
 };
 

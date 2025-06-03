@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import Alert from '../components/Alert';
 import Arrow from '../assets/svg/arrow-right.svg?react';
 import Cancel from '../assets/svg/x.svg?react';
+import { getTopicById, createTopic, updateTopic } from '../utils/api';
 
 const TopicEdit = () => {
   const { id } = useParams();
@@ -23,19 +24,19 @@ const TopicEdit = () => {
 
   useEffect(() => {
     if (isEditing) {
-      fetch(`/api/topics/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.message) {
-            setError(data.message);
-          } else {
-            setFormData({
-              title: data.title || '',
-              template: data.template || '',
-              parameters: data.parameters || { difficulty: 'medium', questions: 5 },
-            });
-          }
-        });
+      const fetchData = async () => {
+        try {
+          const data = await getTopicById(id);
+          setFormData({
+            title: data.title || '',
+            template: data.template || '',
+            parameters: data.parameters || { difficulty: 'medium', questions: 5 },
+          });
+        } catch (err) {
+          setError(err.message);
+        }
+      };
+      fetchData();
     }
   }, [id]);
 
@@ -69,32 +70,25 @@ const TopicEdit = () => {
       title: formData.title,
       template: formData.template,
       parameters: formData.parameters,
-      teacherId: isEditing ? undefined : parseInt(teacherId),
+      ...(teacherId && !isEditing && { teacherId: parseInt(teacherId) }),
     };
 
     try {
-      const url = isEditing ? `/api/topics/${id}` : '/api/topics';
-      const method = isEditing ? 'PUT' : 'POST';
-      const response = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(topicData),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setError(data.message || 'Ошибка при сохранении');
-        return;
+      if (isEditing) {
+        await updateTopic(id, topicData);
+      } else {
+        await createTopic(topicData);
       }
       navigate('/users');
     } catch (err) {
-      setError('Не удалось подключиться к серверу');
+      setError(err.message);
     }
   };
 
   return (
     <div className="topic-edit">
       <h2 className="topic-edit__title text-h2">
-        {isEditing ? 'Edit Topic' : 'Create Topic'}
+        {isEditing ? 'Редактировать тему' : 'Создать тему'}
       </h2>
       {error && <Alert type="error" message={error} onClose={() => setError('')} />}
       <div className="topic-edit__form">

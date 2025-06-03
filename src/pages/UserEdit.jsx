@@ -6,9 +6,10 @@ import ImagePlaceholder from '../components/ImagePlaceholder';
 import Button from '../components/Button';
 import Tab from '../components/Tab';
 import Alert from '../components/Alert';
-import UserTasks from './UserTasks';
+import UserTasks from '../pages/UserTasks';
 import Cancel from '../assets/svg/x.svg?react';
 import Accept from '../assets/svg/check.svg?react';
+import { getUserById, createUser, updateUser } from '../utils/api';
 
 const UserEdit = () => {
   const { id } = useParams();
@@ -31,24 +32,24 @@ const UserEdit = () => {
 
   useEffect(() => {
     if (isEditing) {
-      fetch(`/api/users/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.message) {
-            setError(data.message);
-          } else {
-            setFormData({
-              photo: data.photo || '',
-              lastName: data.lastName || '',
-              firstName: data.firstName || '',
-              middleName: data.middleName || '',
-              email: data.email || '',
-              role: data.role || 'user',
-              password: '',
-              confirmPassword: '',
-            });
-          }
-        });
+      const fetchData = async () => {
+        try {
+          const data = await getUserById(id);
+          setFormData({
+            photo: data.photo || '',
+            lastName: data.lastName || '',
+            firstName: data.firstName || '',
+            middleName: data.middleName || '',
+            email: data.email || '',
+            role: data.role || 'user',
+            password: '',
+            confirmPassword: '',
+          });
+        } catch (err) {
+          setError(err.message);
+        }
+      };
+      fetchData();
     }
   }, [id]);
 
@@ -116,28 +117,21 @@ const UserEdit = () => {
     }
 
     try {
-      const url = isEditing ? `/api/users/${id}` : '/api/users';
-      const method = isEditing ? 'PUT' : 'POST';
-      const response = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setError(data.message || 'Ошибка при сохранении');
-        return;
+      if (isEditing) {
+        await updateUser(id, userData);
+      } else {
+        await createUser(userData);
       }
       navigate('/users');
     } catch (err) {
-      setError('Не удалось подключиться к серверу');
+      setError(err.message);
     }
   };
 
   return (
     <div className="user-edit">
       <h2 className="user-edit__title text-h2">
-        {isEditing ? 'Edit User' : 'Create User'}
+        {isEditing ? 'Редактировать пользователя' : 'Создать пользователя'}
       </h2>
       {error && <Alert type="error" message={error} onClose={() => setError('')} />}
       <div className="user-edit__tabs">
@@ -157,7 +151,6 @@ const UserEdit = () => {
       {activeTab === 'info' && (
         <div className="user-edit__form">
           <div className="user-edit__form-columns">
-
             <div className="user-edit__form-column">
               <div className="user-edit__photo-wrapper" onClick={handleImageClick}>
                 <ImagePlaceholder
@@ -191,9 +184,7 @@ const UserEdit = () => {
                 onChange={(value) => handleChange('middleName', value)}
                 required={!isEditing}
               />
-
             </div>
-
             <div className="user-edit__form-column">
               <TextField
                 label="ID"
@@ -230,7 +221,6 @@ const UserEdit = () => {
                 type="password"
                 required={!isEditing}
               />
-              
               <div className="user-edit__form-placeholder"></div>
             </div>
           </div>

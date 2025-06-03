@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import TextField from '../components/TextField';
 import Button from '../components/Button';
 import Alert from '../components/Alert';
+import { login } from '../utils/api';
 
 const LoginScreen = () => {
   const [formData, setFormData] = useState({
@@ -18,16 +19,7 @@ const LoginScreen = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setError(data.message || 'Ошибка авторизации');
-        return;
-      }
+      const data = await login(formData);
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
       localStorage.setItem('user_id', data.user_id);
@@ -37,13 +29,13 @@ const LoginScreen = () => {
         navigate('/profile');
       }
     } catch (err) {
-      setError('Не удалось подключиться к серверу');
+      setError(err.message || 'Ошибка авторизации');
     }
   };
 
   return (
     <div className="login-screen">
-      <h2 className="login-screen__title text-h2">Login</h2>
+      <h2 className="login-screen__title text-h2">Вход</h2>
       {error && <Alert type="error" message={error} onClose={() => setError('')} />}
       <div className="login-screen__form">
         <TextField
@@ -54,14 +46,14 @@ const LoginScreen = () => {
           required
         />
         <TextField
-          label="Password"
+          label="Пароль"
           value={formData.password}
           onChange={(value) => handleChange('password', value)}
           type="password"
           required
         />
         <Button variant="primary" onClick={handleSubmit}>
-          Login
+          Войти
         </Button>
       </div>
     </div>

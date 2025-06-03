@@ -7,12 +7,12 @@ import Alert from '../components/Alert';
 import Accept from '../assets/svg/check.svg?react';
 import Cancel from '../assets/svg/x.svg?react';
 import Edit from '../assets/svg/edit.svg?react';
+import { getDepartments, getTeacherById, getTopics, createTeacher, updateTeacher } from '../utils/api';
 
 const TeacherEdit = () => {
   const { id } = useParams();
   const isEditing = !!id;
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     lastName: '',
     firstName: '',
@@ -25,31 +25,27 @@ const TeacherEdit = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('/api/departments')
-      .then((res) => res.json())
-      .then((data) => setDepartments(data));
-    if (isEditing) {
-      fetch(`/api/teachers/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.message) {
-            setError(data.message);
-          } else {
-            setFormData({
-              lastName: data.lastName || '',
-              firstName: data.firstName || '',
-              middleName: data.middleName || '',
-              department: data.department || '',
-              description: data.description || '',
-            });
-            fetch('/api/topics')
-              .then((res) => res.json())
-              .then((topicsData) =>
-                setTopics(topicsData.filter((t) => t.teacherId === parseInt(id)))
-              );
-          }
-        });
-    }
+    const fetchData = async () => {
+      try {
+        const departmentsData = await getDepartments();
+        setDepartments(departmentsData);
+        if (isEditing) {
+          const teacherData = await getTeacherById(id);
+          setFormData({
+            lastName: teacherData.lastName || '',
+            firstName: teacherData.firstName || '',
+            middleName: teacherData.middleName || '',
+            department: teacherData.department || '',
+            description: teacherData.description || '',
+          });
+          const topicsData = await getTopics();
+          setTopics(topicsData.filter((t) => t.teacherId === parseInt(id)));
+        }
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+    fetchData();
   }, [id]);
 
   const handleChange = (key, value) => {
@@ -81,28 +77,21 @@ const TeacherEdit = () => {
     };
 
     try {
-      const url = isEditing ? `/api/teachers/${id}` : '/api/teachers';
-      const method = isEditing ? 'PUT' : 'POST';
-      const response = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(teacherData),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setError(data.message || 'Ошибка при сохранении');
-        return;
+      if (isEditing) {
+        await updateTeacher(id, teacherData);
+      } else {
+        await createTeacher(teacherData);
       }
       navigate('/users');
     } catch (err) {
-      setError('Не удалось подключиться к серверу');
+      setError(err.message);
     }
   };
 
   return (
     <div className="teacher-edit">
       <h2 className="teacher-edit__title text-h2">
-        {isEditing ? 'Edit Teacher' : 'Create Teacher'}
+        {isEditing ? 'Редактировать преподавателя' : 'Создать преподавателя'}
       </h2>
       {error && <Alert type="error" message={error} onClose={() => setError('')} />}
       <div className="teacher-edit__form">
@@ -167,7 +156,7 @@ const TeacherEdit = () => {
                   variant="little"
                   onClick={() => navigate(`/topics/${topic.id}`)}
                 >
-                  Edit
+                  Редактировать
                 </Button>
               </div>
             ))}

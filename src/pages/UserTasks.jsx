@@ -4,6 +4,7 @@ import SelectField from '../components/SelectField';
 import Button from '../components/Button';
 import Alert from '../components/Alert';
 import Cancel from '../assets/svg/x.svg?react';
+import { getUserById, getTasks, addUserTask, deleteUserTask } from '../utils/api';
 
 const UserTasks = ({ setError }) => {
   const { id } = useParams();
@@ -13,18 +14,17 @@ const UserTasks = ({ setError }) => {
   const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/users/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          setError(data.message);
-        } else {
-          setCompletedTasks(data.completedTasks || []);
-        }
-      });
-    fetch('/api/tasks')
-      .then((res) => res.json())
-      .then((data) => setTasks(data));
+    const fetchData = async () => {
+      try {
+        const userData = await getUserById(id);
+        setCompletedTasks(userData.completedTasks || []);
+        const tasksData = await getTasks();
+        setTasks(tasksData);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+    fetchData();
   }, [id, setError]);
 
   const handleAddTask = async () => {
@@ -33,36 +33,20 @@ const UserTasks = ({ setError }) => {
       return;
     }
     try {
-      const response = await fetch(`/api/users/${id}/tasks`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(selectedTask),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setError(data.message || 'Ошибка при добавлении задания');
-        return;
-      }
+      const data = await addUserTask(id, selectedTask);
       setCompletedTasks(data.completedTasks);
       setSelectedTask(null);
     } catch (err) {
-      setError('Не удалось подключиться к серверу');
+      setError(err.message);
     }
   };
 
   const handleDeleteTask = async (taskId) => {
     try {
-      const response = await fetch(`/api/users/${id}/tasks/${taskId}`, {
-        method: 'DELETE',
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setError(data.message || 'Ошибка при удалении задания');
-        return;
-      }
+      const data = await deleteUserTask(id, taskId);
       setCompletedTasks(data.completedTasks);
     } catch (err) {
-      setError('Не удалось подключиться к серверу');
+      setError(err.message);
     }
   };
 
@@ -79,7 +63,6 @@ const UserTasks = ({ setError }) => {
         <Button variant="primary" onClick={handleAddTask}>
           Добавить
         </Button>
-
         <Button
           variant="secondary"
           onClick={() => navigate('/users')}

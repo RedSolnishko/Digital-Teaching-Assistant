@@ -1,8 +1,6 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import Menu from '../components/Menu';
-import Breadcrumbs from '../components/Breadcrumbs';
-import { useAuth } from '../hooks/AuthContext';
+
 
 const PrivateLayout = () => {
   const { user } = useAuth();

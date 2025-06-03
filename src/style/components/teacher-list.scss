@@ -54,12 +54,6 @@
     @include text-body;
   }
 
-  .pagination-menu {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-  }
 
   @include mobile {
     margin: 20px auto;

@@ -8,6 +8,7 @@ import Tab from '../components/Tab';
 import Alert from '../components/Alert';
 import Arrow from '../assets/svg/arrow-right.svg?react';
 import Cancel from '../assets/svg/x.svg?react';
+import { getCurrentUser, getTasks, updateUser } from '../utils/api';
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const UserProfile = () => {
     const userId = localStorage.getItem('user_id');
 
     if (!token) {
-      navigate('/');
+      navigate('/login');
       return;
     }
 
@@ -44,32 +45,29 @@ const UserProfile = () => {
       return;
     }
 
-    fetch('/api/users/me', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          setError(data.message);
-          navigate('/');
-        } else {
-          setFormData({
-            id: data.id || '',
-            photo: data.photo || '',
-            lastName: data.lastName || '',
-            firstName: data.firstName || '',
-            middleName: data.middleName || '',
-            email: data.email || '',
-            role: data.role || 'user',
-            password: '',
-            confirmPassword: '',
-          });
-          setCompletedTasks(data.completedTasks || []);
-        }
-      });
-    fetch('/api/tasks')
-      .then((res) => res.json())
-      .then((data) => setTasks(data));
+    const fetchData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        setFormData({
+          id: userData.id || '',
+          photo: userData.photo || '',
+          lastName: userData.lastName || '',
+          firstName: userData.firstName || '',
+          middleName: userData.middleName || '',
+          email: userData.email || '',
+          role: userData.role || 'user',
+          password: '',
+          confirmPassword: '',
+        });
+        setCompletedTasks(userData.completedTasks || []);
+        const tasksData = await getTasks();
+        setTasks(tasksData);
+      } catch (err) {
+        setError(err.message);
+        navigate('/login');
+      }
+    };
+    fetchData();
   }, [navigate]);
 
   const handleImageClick = () => {
@@ -123,29 +121,17 @@ const UserProfile = () => {
     }
 
     try {
-      const response = await fetch(`/api/users/${formData.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify(userData),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setError(data.message || 'Ошибка при сохранении');
-        return;
-      }
+      await updateUser(formData.id, userData);
       setError('');
-      alert('Профиль успешно обновлен');
+      alert('Профиль успешно обновлён');
     } catch (err) {
-      setError('Не удалось подключиться к серверу');
+      setError(err.message);
     }
   };
 
   return (
     <div className="user-profile">
-      <h2 className="user-profile__title text-h2">User Profile</h2>
+      <h2 className="user-profile__title text-h2">Профиль пользователя</h2>
       {error && <Alert type="error" message={error} onClose={() => setError('')} />}
       <div className="user-profile__tabs">
         <Tab
@@ -230,7 +216,7 @@ const UserProfile = () => {
             </div>
           </div>
           <div>
-                        <Button
+            <Button
               variant="secondary"
               onClick={() => navigate('/teachers')}
               rightIcon={<Arrow />}
@@ -242,10 +228,9 @@ const UserProfile = () => {
             <Button variant="primary" onClick={handleSubmit} rightIcon={<Arrow />}>
               Сохранить
             </Button>
-
             <Button
               variant="secondary"
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/login')}
               rightIcon={<Cancel />}
             >
               Отмена

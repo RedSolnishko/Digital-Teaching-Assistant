@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import ImagePlaceholder from '../components/ImagePlaceholder';
 import Button from '../components/Button';
 import Check from '../assets/svg/check.svg?react';
-
+import { getTeacherById, getTopicById, getCurrentUser } from '../utils/api';
 
 const TeacherDetail = () => {
   const { id } = useParams();
@@ -19,39 +19,26 @@ const TeacherDetail = () => {
       return;
     }
 
-    fetch(`/api/teachers/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          navigate('/');
-        } else {
-          setTeacher(data);
-          // Fetch topic details for each topicId
-          Promise.all(
-            data.topics.map((topicId) =>
-              fetch(`/api/topics/${topicId}`)
-                .then((res) => res.json())
-                .then((topicData) => ({
-                  id: topicData.id,
-                  title: topicData.title,
-                }))
-            )
-          ).then((topicData) => setTopics(topicData));
-        }
-      });
-
-    fetch('/api/users/me', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.message) {
-          setCompletedTasks(data.completedTasks || []);
-        }
-      });
+    const fetchData = async () => {
+      try {
+        const teacherData = await getTeacherById(id);
+        setTeacher(teacherData);
+        const topicPromises = teacherData.topics.map(async (topicId) => {
+          const topicData = await getTopicById(topicId);
+          return { id: topicData.id, title: topicData.title };
+        });
+        const topicsData = await Promise.all(topicPromises);
+        setTopics(topicsData);
+        const userData = await getCurrentUser();
+        setCompletedTasks(userData.completedTasks || []);
+      } catch (err) {
+        navigate('/');
+      }
+    };
+    fetchData();
   }, [id, navigate]);
 
-  if (!teacher) return <div>Loading...</div>;
+  if (!teacher) return <div>Загрузка...</div>;
 
   return (
     <div className="teacher-detail">
@@ -89,12 +76,11 @@ const TeacherDetail = () => {
           ))}
         </ul>
       </div>
-
-            <div className="user-profile__btn-group">
+      <div className="user-profile__btn-group">
         <Button
           variant="secondary"
           onClick={() => navigate('/teachers')}
-            >
+        >
           Назад
         </Button>
       </div>

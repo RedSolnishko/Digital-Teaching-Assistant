@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import Alert from '../components/Alert';
 import Check from '../assets/svg/check.svg?react';
 import Arrow from '../assets/svg/arrow-right.svg?react';
+import { getTaskByTopicId, submitTaskAnswer, addUserTask, getCurrentUser } from '../utils/api';
 
 const TaskAnswer = () => {
   const { id } = useParams();
@@ -21,29 +22,18 @@ const TaskAnswer = () => {
       return;
     }
 
-    // Fetch task for the topic
-    fetch(`/api/topics/${id}/task`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          navigate('/');
-        } else {
-          setTask(data);
-        }
-      });
-
-    // Check if task is completed
-    fetch('/api/users/me', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.message) {
-          setCompleted(data.completedTasks?.includes(parseInt(id)) || false);
-        }
-      });
+    const fetchData = async () => {
+      try {
+        const taskData = await getTaskByTopicId(id);
+        setTask(taskData);
+        const userData = await getCurrentUser();
+        setCompleted(userData.completedTasks?.includes(parseInt(id)) || false);
+      } catch (err) {
+        setNotification({ type: 'error', message: err.message });
+        navigate('/');
+      }
+    };
+    fetchData();
   }, [id, navigate]);
 
   const handleSubmit = async () => {
@@ -53,40 +43,20 @@ const TaskAnswer = () => {
     }
 
     try {
-      const response = await fetch(`/api/topics/${id}/submit`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({ answer }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setNotification({ type: 'error', message: data.message || 'Ошибка при проверке ответа' });
-        return;
-      }
+      const data = await submitTaskAnswer(id, answer);
       if (data.isCorrect) {
         setNotification({ type: 'success', message: 'Ответ верный!' });
         setCompleted(true);
-        // Update completed tasks
-        fetch(`/api/users/${localStorage.getItem('user_id')}/tasks`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-          body: JSON.stringify(parseInt(id)),
-        });
+        await addUserTask(localStorage.getItem('user_id'), parseInt(id));
       } else {
         setNotification({ type: 'error', message: 'Ответ неверный. Попробуйте снова.' });
       }
     } catch (err) {
-      setNotification({ type: 'error', message: 'Не удалось подключиться к серверу' });
+      setNotification({ type: 'error', message: err.message });
     }
   };
 
-  if (!task) return <div>Loading...</div>;
+  if (!task) return <div>Загрузка...</div>;
 
   return (
     <div className="task-answer">
