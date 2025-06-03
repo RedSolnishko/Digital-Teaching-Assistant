@@ -137,6 +137,6 @@
 ## Контакты
 
 Если у вас есть вопросы или проблемы с запуском проекта, обратитесь к разработчику: 
-Email: ramires-che@mail.ru
-Telegram: @belyashsvishney
-Vk: https://vk.com/krasnoesolnishk0
+- Email: ramires-che@mail.ru
+- Telegram: @belyashsvishney
+- Vk: https://vk.com/krasnoesolnishk0
