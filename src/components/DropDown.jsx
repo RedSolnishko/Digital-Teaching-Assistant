@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
 
+/**
+ * Компонент выпадающего списка (Dropdown).
+ * Поддерживает варианты с чекбоксами, иконками или текстом.
+ *
+ * @param {string} type - Тип выпадающего списка: 'checkbox' | 'icon' | 'text'.
+ * @param {Array<{id: string, label: string, checked?: boolean, icon?: React.ReactNode}>} options - Список опций.
+ */
 const Dropdown = ({ type, options }) => {
   // Состояние для отслеживания открытости выпадающего списка
   const [isOpen, setIsOpen] = useState(false);
@@ -12,10 +19,15 @@ const Dropdown = ({ type, options }) => {
     setSelectedOptions(options);
   }, [options]);
 
-  // Функция для переключения состояния выпадающего списка
+  /**
+   * Переключает состояние выпадающего списка.
+   */
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  // Функция для обработки изменения состояния чекбокса
+  /**
+   * Обрабатывает изменение состояния чекбокса.
+   * @param {string} id - ID опции.
+   */
   const handleCheckboxChange = (id) => {
     setSelectedOptions((prev) =>
       prev.map((opt) =>

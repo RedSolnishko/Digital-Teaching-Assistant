@@ -11,12 +11,18 @@ import Cancel from '../assets/svg/x.svg?react';
 import Accept from '../assets/svg/check.svg?react';
 import { getUserById, createUser, updateUser } from '../utils/api';
 
+/**
+ * Компонент редактирования или создания пользователя.
+ * Позволяет администратору управлять данными пользователя и его заданиями.
+ */
 const UserEdit = () => {
+  // Получаем ID пользователя из URL
   const { id } = useParams();
-  const isEditing = !!id;
+  const isEditing = !!id; // Флаг редактирования
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef(null); // Ссылка на input для загрузки изображения
 
+  // Состояние для хранения данных формы
   const [formData, setFormData] = useState({
     photo: '',
     lastName: '',
@@ -27,9 +33,11 @@ const UserEdit = () => {
     password: '',
     confirmPassword: '',
   });
+  // Состояния для ошибки и активной вкладки
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('info');
 
+  // Загружаем данные пользователя при редактировании
   useEffect(() => {
     if (isEditing) {
       const fetchData = async () => {
@@ -53,10 +61,17 @@ const UserEdit = () => {
     }
   }, [id]);
 
+  /**
+   * Обработчик клика по изображению для вызова input.
+   */
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
 
+  /**
+   * Обработчик загрузки изображения.
+   * Проверяет тип и размер файла, преобразует в base64.
+   */
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -76,10 +91,19 @@ const UserEdit = () => {
     }
   };
 
+  /**
+   * Обработчик изменения полей формы.
+   * @param {string} key - Название поля.
+   * @param {string} value - Новое значение.
+   */
   const handleChange = (key, value) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
+  /**
+   * Проверяет валидность формы.
+   * @returns {boolean} - True, если форма валидна.
+   */
   const validateForm = () => {
     if (!isEditing) {
       if (
@@ -100,6 +124,10 @@ const UserEdit = () => {
     return true;
   };
 
+  /**
+   * Обработчик отправки формы.
+   * Создаёт или обновляет пользователя и перенаправляет.
+   */
   const handleSubmit = async () => {
     if (!validateForm()) return;
 
@@ -130,17 +158,21 @@ const UserEdit = () => {
 
   return (
     <div className="user-edit">
+      {/* Заголовок формы */}
       <h2 className="user-edit__title text-h2">
         {isEditing ? 'Редактировать пользователя' : 'Создать пользователя'}
       </h2>
+      {/* Уведомление об ошибке */}
       {error && <Alert type="error" message={error} onClose={() => setError('')} />}
       <div className="user-edit__tabs">
+        {/* Вкладка основных данных */}
         <Tab
           label="Основные данные"
           active={activeTab === 'info'}
           onClick={() => setActiveTab('info')}
         />
         {isEditing && (
+          // Вкладка пройденных заданий
           <Tab
             label="Пройденные задания"
             active={activeTab === 'tasks'}
@@ -152,6 +184,7 @@ const UserEdit = () => {
         <div className="user-edit__form">
           <div className="user-edit__form-columns">
             <div className="user-edit__form-column">
+              {/* Загрузка фото */}
               <div className="user-edit__photo-wrapper" onClick={handleImageClick}>
                 <ImagePlaceholder
                   variant="profile"
@@ -166,6 +199,7 @@ const UserEdit = () => {
                   onChange={handleImageChange}
                 />
               </div>
+              {/* Поля формы */}
               <TextField
                 label="Фамилия"
                 value={formData.lastName}
@@ -225,9 +259,11 @@ const UserEdit = () => {
             </div>
           </div>
           <div className="user-edit__btn-group">
+            {/* Кнопка отправки формы */}
             <Button variant="primary" onClick={handleSubmit} rightIcon={<Accept />}>
               {isEditing ? 'Сохранить' : 'Создать'}
             </Button>
+            {/* Кнопка отмены */}
             <Button
               variant="secondary"
               onClick={() => navigate('/users')}

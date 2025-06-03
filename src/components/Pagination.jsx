@@ -1,6 +1,16 @@
 import React from 'react';
 import PaginationIcon from '../assets/svg/chevron-left.svg?react';
 
+/**
+ * Компонент пагинации.
+ * Отображает кнопки для навигации по страницам с поддержкой "..." для больших списков.
+ *
+ * @param {string} [className=""] - Дополнительные CSS-классы.
+ * @param {number} totalItems - Общее количество элементов.
+ * @param {number} itemsPerPage - Количество элементов на странице.
+ * @param {number} currentPage - Текущая страница.
+ * @param {Function} onPageChange - Обработчик смены страницы.
+ */
 const PaginationMenu = ({
   className = '',
   totalItems,
@@ -8,9 +18,13 @@ const PaginationMenu = ({
   currentPage,
   onPageChange,
 }) => {
+  // Вычисляем общее количество страниц
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  // Логика отображения номеров страниц
+  /**
+   * Генерирует массив номеров страниц для отображения.
+   * @returns {Array<number|string>} - Список страниц и "..." для пропусков.
+   */
   const getPageNumbers = () => {
     const pages = [];
     const maxVisiblePages = 3; // Показываем до 3 страниц перед "..."
@@ -55,12 +69,18 @@ const PaginationMenu = ({
     return pages;
   };
 
+  /**
+   * Переходит на предыдущую страницу.
+   */
   const handlePrev = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
     }
   };
 
+  /**
+   * Переходит на следующую страницу.
+   */
   const handleNext = () => {
     if (currentPage < totalPages) {
       onPageChange(currentPage + 1);
@@ -69,6 +89,7 @@ const PaginationMenu = ({
 
   return (
     <div className={`pagination ${className}`}>
+      {/* Кнопка "Назад" */}
       <button
         className="pagination__button"
         onClick={handlePrev}
@@ -76,6 +97,7 @@ const PaginationMenu = ({
       >
         <PaginationIcon />
       </button>
+      {/* Номера страниц */}
       {getPageNumbers().map((page, index) => (
         <button
           key={index}
@@ -88,6 +110,7 @@ const PaginationMenu = ({
           {page}
         </button>
       ))}
+      {/* Кнопка "Вперёд" */}
       <button
         className="pagination__button pagination__button--right"
         onClick={handleNext}

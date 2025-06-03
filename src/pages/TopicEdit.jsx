@@ -8,20 +8,28 @@ import Arrow from '../assets/svg/arrow-right.svg?react';
 import Cancel from '../assets/svg/x.svg?react';
 import { getTopicById, createTopic, updateTopic } from '../utils/api';
 
+/**
+ * Компонент редактирования или создания темы.
+ * Позволяет создавать новую тему или редактировать существующую.
+ */
 const TopicEdit = () => {
+  // Получаем ID темы из URL и параметры запроса
   const { id } = useParams();
-  const isEditing = !!id;
+  const isEditing = !!id; // Флаг редактирования
   const navigate = useNavigate();
   const location = useLocation();
   const teacherId = new URLSearchParams(location.search).get('teacherId');
 
+  // Состояние для хранения данных формы
   const [formData, setFormData] = useState({
     title: '',
     template: '',
     parameters: { difficulty: 'medium', questions: 5 },
   });
+  // Состояние для хранения ошибки
   const [error, setError] = useState('');
 
+  // Загружаем данные темы при редактировании
   useEffect(() => {
     if (isEditing) {
       const fetchData = async () => {
@@ -40,10 +48,20 @@ const TopicEdit = () => {
     }
   }, [id]);
 
+  /**
+   * Обработчик изменения полей формы.
+   * @param {string} key - Название поля.
+   * @param {any} value - Новое значение.
+   */
   const handleChange = (key, value) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
+  /**
+   * Обработчик изменения параметров темы.
+   * @param {string} key - Название параметра (difficulty или questions).
+   * @param {any} value - Новое значение.
+   */
   const handleParameterChange = (key, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -51,6 +69,10 @@ const TopicEdit = () => {
     }));
   };
 
+  /**
+   * Проверяет валидность формы.
+   * @returns {boolean} - True, если форма валидна.
+   */
   const validateForm = () => {
     if (!formData.title || !formData.template) {
       setError('Все поля обязательны для заполнения');
@@ -63,6 +85,10 @@ const TopicEdit = () => {
     return true;
   };
 
+  /**
+   * Обработчик отправки формы.
+   * Создаёт или обновляет тему и перенаправляет.
+   */
   const handleSubmit = async () => {
     if (!validateForm()) return;
 
@@ -87,17 +113,21 @@ const TopicEdit = () => {
 
   return (
     <div className="topic-edit">
+      {/* Заголовок формы */}
       <h2 className="topic-edit__title text-h2">
         {isEditing ? 'Редактировать тему' : 'Создать тему'}
       </h2>
+      {/* Уведомление об ошибке */}
       {error && <Alert type="error" message={error} onClose={() => setError('')} />}
       <div className="topic-edit__form">
+        {/* Поле для названия темы */}
         <TextField
           label="Наименование темы"
           value={formData.title}
           onChange={(value) => handleChange('title', value)}
           required
         />
+        {/* Поле для шаблона задания */}
         <TextField
           label="Шаблон задания"
           value={formData.template}
@@ -105,6 +135,7 @@ const TopicEdit = () => {
           multiline
           required
         />
+        {/* Выбор уровня сложности */}
         <SelectField
           placeholder="Уровень сложности"
           value={formData.parameters.difficulty}
@@ -116,6 +147,7 @@ const TopicEdit = () => {
           ]}
           required
         />
+        {/* Поле для количества вопросов */}
         <TextField
           label="Количество вопросов"
           value={formData.parameters.questions}
@@ -124,9 +156,11 @@ const TopicEdit = () => {
           required
         />
         <div className="topic-edit__btn-group">
+          {/* Кнопка отправки формы */}
           <Button variant="primary" onClick={handleSubmit} rightIcon={<Arrow />}>
             {isEditing ? 'Сохранить' : 'Создать'}
           </Button>
+          {/* Кнопка отмены */}
           <Button
             variant="secondary"
             onClick={() => navigate('/users')}
