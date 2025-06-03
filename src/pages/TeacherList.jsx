@@ -7,7 +7,7 @@ import ImagePlaceholder from '../components/ImagePlaceholder';
 const TeacherList = () => {
   const [teachers, setTeachers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const teachersPerPage = 6;
+  const teachersPerPage = 8;
   const navigate = useNavigate();
 
   useEffect(() => {
