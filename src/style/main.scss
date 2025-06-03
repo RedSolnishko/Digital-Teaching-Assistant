@@ -1,4 +1,50 @@
 html{
-    // background-color: var(--app-bg);
-    background-color: white;
+    background-color: var(--app-bg);
+    // background-color: white;
 }
+
+.login-screen {
+  max-width: 30%;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  &__btn{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.user-list {
+
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+&__table{
+    display: flex;
+    justify-content: center;
+}
+}
+
+

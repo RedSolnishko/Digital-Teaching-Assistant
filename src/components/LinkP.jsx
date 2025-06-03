@@ -1,5 +1,5 @@
 import React from "react";
-import LinkIcon from "../assets/svg/link.svg?react"; // SVG иконка ссылки
+import LinkIcon from "../assets/svg/link.svg?react"; 
 
 /**
  * Универсальный компонент ссылки

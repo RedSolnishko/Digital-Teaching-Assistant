@@ -2,66 +2,65 @@
 @use "../utils/breakpoints" as *;
 
 .alert {
-    display: flex;
-    width: 44rem;
-    padding: 2.4rem;
-    border-radius: 2.4rem;
-    border: 1px solid;
-    position: relative;
-    color: var(--text-color);
+  display: flex;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 2.4rem;
+  border-radius: 2.4rem;
+  border: 1px solid;
+  position: relative;
+  color: var(--text-color);
 
-    @include mobile{
+  @include mobile{
         width: 35.1rem;
         padding: 2rem;
         border-radius: 2rem;
-    }
+  }
 
+  &--success {
+    border-color: var(--electric-green-default-color);
+    background: var(--card-color);
+  }
+  
+  &--error {
+    border-color: var(--suai-red-default-color);
+    background: var(--card-color);
+  }
+  
+  &__icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-right: 1.6rem;
 
-    &--success {
-      border-color: var(--electric-green-default-color);
-      background: var(--card-color);
-    }
-  
-    &--error {
-      border-color: var(--suai-red-default-color);
-      background: var(--card-color);
-
-    }
-  
-    &__icon {
-      width: 2.4rem;
-      height: 2.4rem;
-      margin-right: 1.6rem;
-
-      @include mobile{
-            width: 2rem;
-            height: 2rem;
-            margin-right: 1.2rem;
-        }
-    }
-  
-    &__content {
-      flex: 1;
-    }
-  
-    &__title {
-      font-weight: bold;
-      display: block;
-      @include text-body-small-bold;
-    }
-  
-    &__message {
-        color: var(--text-secondary-color);
-        @include text-body-small;
-    }
-  
-    &__close {
-        width: 2rem;
-        height: 2rem;
-        background: none;
-        border: none;
-        cursor: pointer;
-        display: flex;
+    @include mobile{
+      width: 2rem;
+      height: 2rem;
+      margin-right: 1.2rem;
     }
   }
+  
+  &__content {
+    flex: 1;
+  }
+  
+  &__title {
+    font-weight: bold;
+    display: block;
+    @include text-body-small-bold;
+  }
+  
+  &__message {
+    color: var(--text-secondary-color);
+    @include text-body-small;
+  }
+  
+  &__close {
+    width: 2rem;
+    height: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+  }
+}
   

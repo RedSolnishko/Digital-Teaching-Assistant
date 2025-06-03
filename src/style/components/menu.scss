@@ -1,80 +1,200 @@
-@use "../utils/typography" as *;
+// menu.scss
 @use "../utils/breakpoints" as *;
-
+@use "../utils/typography" as *;
 
 .menu {
-    width: 24rem;
-    height: 90rem;
+  width: 24rem;
+  height: 100%;
+  background-color: var(--card-color);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  overflow-y: auto;
+  transition: transform 0.3s ease-in-out;
+
+  @include mobile {
+    width: 25.9rem;
+    height: 52.8rem;
+    right: 0;
+    left: auto;
+    z-index: 1001;
+    transform: translateY(-100%);
+    overflow: hidden;
+    border-radius: 2.4rem;
+    
+    &.mobile-menu-open {
+      margin-right: 1.2rem;
+      transform: translateY(4rem);
+      box-shadow: 0px 0px 50px 0px rgba(31, 39, 51, 0.08); 
+    }
+  }
+
+  &__logo {
+    width: 8rem;
+    padding: 2.6rem 0 2.6rem 2.4rem;
+    @include mobile {
+      display: none;
+    }
+      &--mobile{
+        display: block;
+        width: 6rem;
+      }
+  }
+
+  &__icon {
+    width: 2rem;
+    height: 2rem;
+    &--stat{
+      width: 1.2rem;
+      height: 1.2rem
+    }
+  }
+
+  &__role {
+    color: var(--text-secondary-color);
+    @include text-body-small;
+  }
+
+  &__header-mobile {
+    height: 4.8rem;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     background-color: var(--card-color);
+    padding: 0 1.2rem;
+    
+    @include mobile {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &--icon {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      color: var(--text-secondary-color);
+    }
+
+    .menu__logo {
+      width: 6rem;
+      height: auto;
+    }
+  }
+
+  &__profile {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 2.4rem;
+    gap: 2rem;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 
-  
-    &__header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 2.4rem;
-        border-top: 1px solid var(--divider-color);
-        border-bottom: 1px solid var(--divider-color);
-    }
-  
-    &__logo {
-        width: 8rem;
-        padding: 2.4rem 13.4rem 2.4rem 2.4rem;
-    }
- 
-    &__info {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.8rem;
-        margin-bottom: 1.6rem;
-    }
-  
-    &__name {
-        text-align: center;
-        padding-top: 2rem;
-        color: var(--text-color);
-        @include text-body-bold;
-    }
-  
-    &__role {
-        color: var(--text-secondary-color);
-        @include text-body-small;
-    }
-  
-    &__stats {
-        display: flex;
-        justify-content: center;
-        color: var(--text-secondary-color);
-        gap: 0.8rem;
-        @include text-body-small;
-    }
-  
-    &__stat {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-    }
-  
-    &__icon {
-        width: 1.6rem;
-        height: 1.6rem;
-    }
-  
-    &__nav {
-        margin-top: 2rem;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-  
-    &__footer {
-        width: 19.2rem;
-        padding-top: 4rem;
+    @include mobile {
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 2rem;
+      gap: 1.2rem;
+      border-top: none;
+      border-bottom: none;
     }
   }
+
+  &__fullname {
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    @include text-body-bold;
+
+    @include mobile {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-secondary-color);
+
+    @include mobile{
+      display: flex;
+      flex-direction: row;
+      margin-top: 0.8rem;
+    }
+}
+
+&__divider--mobile {
+  display: none;
+
+  @include mobile {
+    display: inline;
+    @include text-caption;
+  }
+}
+
+  &__stats {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    @include text-body-small;
+
+    @include mobile {
+      gap: 0.4rem;
+      @include text-caption;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0 2.4rem;
+    margin: 2.4rem 0 4rem 0;
+    gap: 0.8rem;
+    
+    @include mobile{
+      padding: 0 2rem;
+      margin: 1.6rem 0 2rem 0 ;
+    }
+  }
+
+  &__mobile--links {
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem 2.4rem 2rem 2.4rem;
+    gap: 1.2rem;
+  }
   
+  &__separator {
+  display: none;
+
+    @include mobile {
+      display: block;
+      height: 1px;
+      width: 80%;
+      margin: auto;
+      background-color: var(--border-color);
+    }
+  }
+
+  &__footer{
+    margin: 1.6rem 2rem 2rem 2rem;
+
+    &--button{
+      @include mobile{
+        display: none;
+      }
+    }
+  }
+}

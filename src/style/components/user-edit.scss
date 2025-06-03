@@ -1,0 +1,80 @@
+@use "../utils/typography" as *;
+@use "../utils/breakpoints" as *;
+
+.user-edit {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  &__tabs {
+    display: flex;
+    gap: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__form-columns {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__form-placeholder {
+    height: 0;
+  }
+
+  &__photo-wrapper {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden; // Обрезаем выступающие части изображения
+
+    &:hover .user-edit__photo {
+      opacity: 0.8;
+      border: 2px solid var(--primary-color);
+    }
+  }
+
+  &__btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  &__tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__task-list {
+    margin-top: 20px;
+  }
+
+  &__task-item {
+    display: flex;
+    width: 30%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    @include text-body;
+  }
+}

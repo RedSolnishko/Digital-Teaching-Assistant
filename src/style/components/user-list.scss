@@ -1,0 +1,98 @@
+@use "../utils/typography" as *;
+@use "../utils/breakpoints" as *;
+
+.user-list {
+  padding: 20px;
+
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    @include text-h2;
+  }
+
+  &__tabs {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__prbtn {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  &__btn-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+
+  }
+
+
+
+  // Стили для пагинации
+  .pagination-menu {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    .button {
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+  }
+
+  // Стили для кнопки "Logout"
+  .button {
+    margin-top: 20px;
+  }
+
+  @include mobile {
+    padding: 15px;
+    margin: 20px auto;
+
+    &__title {
+      font-size: 20px;
+    }
+
+    &__tabs {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    &__btn-group {
+      flex-direction: column;
+      gap: 10px;
+
+      .button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    &__prbtn {
+      justify-content: center;
+    }
+
+    &__table {
+      .table {
+        th, td {
+          font-size: 14px;
+          padding: 8px;
+        }
+
+        // Скрываем некоторые колонки на мобильных для упрощения
+        th:nth-child(3), td:nth-child(3) {
+          display: none; // Скрываем "Name" для пользователей или "Department" для преподавателей
+        }
+      }
+    }
+  }
+}

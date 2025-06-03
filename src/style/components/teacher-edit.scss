@@ -1,0 +1,52 @@
+@use "../utils/typography" as *;
+@use "../utils/breakpoints" as *;
+
+.teacher-edit {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    @include text-h2;
+  }
+
+  &__subtitle {
+    font-size: 20px;
+    margin: 20px 0 10px;
+    @include text-h3;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  &__topics {
+    margin-top: 30px;
+  }
+
+  &__topic-list {
+    margin-top: 20px;
+  }
+
+  &__topic-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    @include text-body;
+  }
+}

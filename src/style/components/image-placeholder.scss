@@ -20,29 +20,20 @@
     }
   
     // Варианты placeholder'а
-    &--rating-card {
-        width: 24.9rem;
-        height: 24.9rem;
-
-        @include mobile{
-            width: 15.2rem;
-            height: 15.2rem;
-        }
-    }
   
     &--profile {
-        width: 20rem;
-        height: 20rem;
+        width: 15rem;
+        height: 15rem;
 
         @include mobile{
-            width: 12rem;
-            height: 12rem;
+            width: 7rem;
+            height: 7rem;
         }
     }
   
     &--menu {
-        width: 12rem;
-        height: 12rem;
+        width: 7rem;
+        height: 7rem;
 
         @include mobile{
             width: 2.4rem;

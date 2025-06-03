@@ -1,0 +1,28 @@
+@use "../utils/typography" as *;
+@use "../utils/breakpoints" as *;
+
+.user-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  &__btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  &__task-list {
+    margin-top: 20px;
+  }
+
+  &__task-item {
+    display: flex;
+    width: 30%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    @include text-body;
+  }
+}

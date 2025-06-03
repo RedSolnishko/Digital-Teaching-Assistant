@@ -11,8 +11,9 @@
     padding-inline-end: 0;
     padding-inline-start: 0;
     border: none;
+    background: transparent;
     cursor: pointer;
-    color: var(--text-secondary-color);
+    color: var(--text-color);
     @include text-button;
 
     @include mobile{
